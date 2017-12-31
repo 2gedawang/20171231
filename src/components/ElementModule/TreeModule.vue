@@ -1,9 +1,11 @@
 <template>
   <div class="layout-div">
       <el-tree 
+        :data="pbiTreeData"
         :props="defaultProps"
         lazy
-        :load="lazyLoad" 
+        :load="lazyLoad"
+        node-key="oid"
         @node-click="handleNodeClick">
       </el-tree>
   </div>
@@ -15,21 +17,7 @@ export default {
   name: 'treeModule',
   data() {
     return {
-      pbiTreeData: [{
-        name: '一级 1',
-        oid: '1-1',
-        children: [{
-          name: '二级 1-1',
-          oid: '2-1',
-          children: [{
-            name: '三级 1-1-1',
-            oid: '3-1'
-          }]
-        },{
-          name: '二级 1-2',
-          oid: '2-2'
-        }]
-      }],
+      pbiTreeData: [{"name": "test111"}],
       defaultProps: {
         children: 'children',
         label: 'name'
@@ -37,14 +25,30 @@ export default {
     };
   },
   methods: {
+    mounted() {
+      this.$http.get('http://localhost:8081/test/pbiTreeData.json', {
+        orderId: "1"
+      })
+      .then((res) => {
+        debugger
+        this.pbiTreeData = res
+      }, (err) => {
+        debugger
+        // this.$emit('on-close-check-dialog')
+      });
+    },
     handleNodeClick(data) {
       this.$emit('loadTreeData',data);
     },
     lazyLoad(node, resolve) {
-      debugger;
-      if(node.level == 0){
-        return resolve[{'name':'111'}];
-      }
+      this.$http.get('http://localhost:8081/test/pbiTreeData.json', {
+        orderId: "1"
+      })
+      .then((res) => {
+        this.isShowSuccessDialog = true
+      }, (err) => {
+        this.isShowFailDialog = true
+      })
     }
   }
 };
