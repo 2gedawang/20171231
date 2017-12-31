@@ -14,3 +14,15 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+// this.$http.post('/api/checkOrder', {
+// orderId: this.orderId
+// })
+// .then((res) => {
+// this.isShowSuccessDialog = true
+// this.$emit('on-close-check-dialog')
+// }, (err) => {
+// this.isShowFailDialog = true
+// this.$emit('on-close-check-dialog')
+// })
+

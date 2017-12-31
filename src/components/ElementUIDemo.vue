@@ -2,7 +2,6 @@
   <div class="layou-div">
     <!---头部样式-->
     <el-header style="text-align: right; font-size: 12px">
-      <button v-on:click="addData" >addData</button>
       <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
@@ -11,13 +10,12 @@
           <el-dropdown-item>删除</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <button >1111</button>
       <span v-html="loginUser"></span>
     </el-header>
 
     <el-container style="height: 500px; border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <TreeModuleDemo @myevent="loadtreedata" ></TreeModuleDemo>
+        <TreeModuleDemo @loadTreeData="loadTreeData" ></TreeModuleDemo>
       </el-aside>
       <el-container>
         <el-main>
@@ -39,22 +37,8 @@ export default {
     TreeModuleDemo,TableModuleDemo
   },
   methods: {
-    loadtreedata(data) {
+    loadTreeData(data) {
       console.log("parent:"+data);
-      debugger;
-    },
-    addData () {
-      debugger;
-      var dataArr = [];
-      for(var i = 0 ;i<10;i++){
-        var dataObj = {
-          date: '2016-05-02',
-          name: Math.random(),
-          address: ''
-        }
-        dataArr.push(dataObj);
-      }
-      this.tableData = dataArr;
     }
   },
   data() {

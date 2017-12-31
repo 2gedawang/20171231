@@ -1,11 +1,11 @@
 <template>
   <div class="layout-div">
       <el-tree 
-        :data="pbiTreeData" 
-        :props="defaultProps" 
+        :props="defaultProps"
+        lazy
+        :load="lazyLoad" 
         @node-click="handleNodeClick">
       </el-tree>
-      <button @click="myemitevent">test</button>
   </div>
 </template>
 
@@ -38,16 +38,14 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      debugger;
-      var clickData = data;
-      this.$emit('myevent',clickData);
-      console.log(data);
+      this.$emit('loadTreeData',data);
     },
-    myemitevent() {
-      console.log("myEmitEvent");
-      this.$emit('myevent',"111111111")
+    lazyLoad(node, resolve) {
+      debugger;
+      if(node.level == 0){
+        return resolve[{'name':'111'}];
+      }
     }
-
   }
 };
 </script>
