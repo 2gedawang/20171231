@@ -13,22 +13,32 @@
       <span v-html="loginUser"></span>
     </el-header>
 
-    <el-container style="height: 500px; border: 1px solid #eee">
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+    <el-container style="height: 1000px; border: 1px solid #eee">
+      <el-aside width="300px" style="background-color: rgb(238, 241, 246)">
         <TreeModuleDemo @loadTreeData="loadTreeData" ></TreeModuleDemo>
       </el-aside>
       <el-container>
-        <el-main>
-          <TableModuleDemo></TableModuleDemo>
+        <el-main style="padding:20px 5px;">
+          <TableModuleDemo :treeName="treeName" ></TableModuleDemo>
         </el-main>
       </el-container>
     </el-container>
 
-  </div>
+    <el-dialog
+    title="提示"
+    :visible.sync="dialogVisible"
+    width="30%"
+    :before-close="handleClose">
+    <span v-text="dialogmsg"></span>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    </span>
+  </el-dialog>
+</div>
 </template>
 
 <script>
-
 import TreeModuleDemo from '@/components/ElementModule/TreeModule'
 import TableModuleDemo from '@/components/ElementModule/TableModule'
 
@@ -38,18 +48,27 @@ export default {
   },
   methods: {
     loadTreeData(data) {
-      console.log("parent:"+data);
+      if(data.oid == '-1'){
+        this.dialogmsg = '这是一个异常节点';
+        this.dialogVisible = true;
+      }else{
+        this.treeName = data;
+      }
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+      .then(_ => {
+        done();
+      })
+      .catch(_ => {});
     }
   },
   data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    };
     return {
-      tableData: [],
+      dialogmsg: '信息初始化',
       loginUser: 'wcadmin',
+      dialogVisible:false,
+      treeName:''
     }
   }
 };
