@@ -1,5 +1,11 @@
 <template>
-  <div style="width:600px;margin:80px auto;">
+
+  <div style="width:600px;margin:0px auto;">
+    <el-carousel indicator-position="outside">
+      <el-carousel-item ><LoopTableDataDemo></LoopTableDataDemo></el-carousel-item>
+      <el-carousel-item ><LoopTableDataDemo></LoopTableDataDemo></el-carousel-item>
+      <el-carousel-item ><LoopTableDataDemo></LoopTableDataDemo></el-carousel-item>
+    </el-carousel>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="活动名称">
         <el-input v-model="form.name"></el-input>
@@ -64,8 +70,6 @@
   <el-form-item label="活动形式">
     <el-input type="textarea" v-model="form.desc"></el-input>
   </el-form-item>
-
-
   <el-form-item>
     <el-button type="primary" @click="onSubmit">立即创建</el-button>
     <el-button @click="onCancel" >取消</el-button>
@@ -76,7 +80,11 @@
 
 
 <script>
+import LoopTableDataDemo from '@/components/ElementModule/LoopTableData'
 export default {
+  components:{
+    LoopTableDataDemo
+  },
   data() {
     const generateData = _ => {
       const data = [];
@@ -106,9 +114,26 @@ export default {
         desc: ''
       },
       transferData: generateData(),
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      }],
       filterMethod(query, item) {
         return item.pinyin.indexOf(query) > -1;
-      },
+      }
     }
   },
   methods: {
@@ -135,3 +160,21 @@ export default {
   }
 }
 </script>
+
+<style>
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
+</style>
